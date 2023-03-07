@@ -4,14 +4,15 @@ import Icon  from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 const chat = [
-    {id: 1 , username: 'ridwan', message: 'hai', status: 'sent', isMe: true},
-    {id: 2 , username: 'ainul', message: 'hai juga', status: 'sent', isMe: false},
+    {id: 1 , username: 'Customer A', message: 'hai', status: 'sent', datetime: '04-02-2023 10:48', isMe: true},
+    {id: 2 , username: 'Customer B', message: 'hai juga', status: 'sent', datetime: '04-02-2023 10:49', isMe: false},
 ]
 
-const Item = ({title, message, isMe}) => (
+const Item = ({title, message, isMe, datetime}) => (
     <View style={ isMe ? styles.chatBubbleMe : styles.chatBubbleUser}>
     <Text style={styles.title}>{title}</Text>
       <Text style={styles.message}>{message}</Text>
+      <Text style={styles.time}>{datetime}</Text>
     </View>
   );
 
@@ -22,7 +23,7 @@ const ChatRoom = () => {
             <View style={styles.content}>
             <FlatList
                 data={chat}
-                renderItem={({item}) => <Item title={item.username} message={item.message} isMe={item.isMe}/>}
+                renderItem={({item}) => <Item title={item.username} message={item.message} isMe={item.isMe} datetime={item.datetime}/>}
                 keyExtractor={item => item.id}
             />
             </View>
@@ -77,6 +78,11 @@ const styles = StyleSheet.create({
     },
     message: {
         fontSize: 18
+    },
+    time: {
+        textAlign: 'right',
+        fontSize: 10,
+        marginTop: 10
     }
 })
 

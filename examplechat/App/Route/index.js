@@ -21,7 +21,7 @@ const App = () => {
             component={Home}
             options={{
                 headerLeft: null,
-                headerTitle: 'Example Chat Dashboard',
+                headerTitle: 'Chat Dashboard',
             }}
           />
           <Stack.Screen
@@ -33,14 +33,14 @@ const App = () => {
             name="ChatRoom"
             component={ChatRoom}
             options={{
-                headerTitle: 'Example Chat Room',
+                headerTitle: 'Chat Room',
             }}
           />
            <Stack.Screen
             name="List"
             component={ListChat}
             options={{
-                headerTitle: 'Example Chat List',
+                headerTitle: 'Chat List',
             }}
           />
           {/* <Stack.Screen

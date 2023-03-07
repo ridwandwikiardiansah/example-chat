@@ -6,8 +6,8 @@ import { map } from 'lodash';
 const ListChat = ({navigation}) => {
 
     const chat = [
-        { username: 'Ridwan', message: 'Hai' },
-        { username: 'Ainul', message: 'Wan, lu dimna?' },
+        {id: 1 , username: 'Customer A', message: 'hai', status: 'sent', datetime: '04-02-2023 10:48', isMe: true},
+        {id: 2 , username: 'Admin', message: 'hai juga', status: 'sent', datetime: '04-02-2023 10:49', isMe: false},
 
         ]
     
@@ -21,6 +21,7 @@ const ListChat = ({navigation}) => {
                         <TouchableOpacity style={styles.card} key={index} onPress={()=>navigation.navigate('ChatRoom')}>
                             <Text style={styles.username}>{i.username}</Text>
                             <Text numberOfLines={1}>{i.message}</Text>
+                            <Text style={styles.time}>{i.datetime}</Text>
                         </TouchableOpacity>
                        ))
                    }
@@ -51,6 +52,11 @@ const styles = StyleSheet.create({
     username: {
         fontWeight: 'bold',
         fontSize: 20
+    },
+    time: {
+        textAlign: 'right',
+        fontSize: 10,
+        marginTop: 10
     }
 })
 
