@@ -19,28 +19,23 @@ const Item = ({title, message, isMe, datetime}) => (
   );
 
 
-const ChatRoom = (props) => {
+const AddChat = (props) => {
+    const [subject, setSubject] = useState('')
     const [message, setMessage] = useState('')
     const [list, setList] = useState([])
     const [username, setUsername] = useState('')
     
     const getListChat = async () => {
         const getUser = await AsyncStorage.getItem('username')
-        console.log(data,'s')
         setUsername(getUser)
-        const {data} = props.route.params 
-        console.log(data,'aa')
         const body = {
             page: 'login',
             token: 'CHAT!@#$%',
-            username : data.untuk,
-            username2: getUser,
-            id: data.id
+            username : getUser,
         }
     try {
         const getList =  await axios.post('http://103.75.26.78:8880/savehr/ws.listchat.php',body)
         setList(getList.data.msg)
-        console.log(getList, 'a')
     } catch(e){
         console.log('error', e)
     }
@@ -51,17 +46,17 @@ const ChatRoom = (props) => {
     },[])
 
     const sendMessages = async () => {
-        const {data} = props.route.params 
         const getUser = await AsyncStorage.getItem('username')
         const body = {
             page: 'login',
             token: 'CHAT!@#$%',
             username :getUser,
-            untuk: data.untuk,
+            untuk: subject,
             pesan: message
         }
         try {
             const getList =  await axios.post('http://103.75.26.78:8880/savehr/ws.savechat.php',body)
+            console.log(getList.data, 'a')
             setMessage('')
             getListChat();
         } catch(e){
@@ -69,12 +64,14 @@ const ChatRoom = (props) => {
         }
     }
 
+    console.log(subject,'tes')
+
     return (
         <View style={styles.container}>
             <View style={styles.content}>
-                {/* <View style={styles.penerima}>
+                <View style={styles.penerima}>
                     <TextInput placeholder='Masukkan Username Penerima' onChangeText={(e)=>setSubject(e)} />
-                </View> */}
+                </View>
             <FlatList
                 style={styles.chatContainer}
                 showsVerticalScrollIndicator={false}
@@ -155,8 +152,8 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     chatContainer: {
-        height: '92%'
+        height: '80%'
     }
 })
 
-export default ChatRoom
+export default AddChat

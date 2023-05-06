@@ -10,7 +10,7 @@ export default function Input(props) {
             <TextInput 
                 style={styles.input} 
                 onChangeText={props.onChange} 
-                defaultValue={props.placeholder}
+                placeholder={props.placeholder}
                 value={props.value}
                 editable={props.edit}
                 secureTextEntry={props.password}/>

@@ -1,11 +1,34 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { TouchableOpacity } from 'react-native'
 import { StyleSheet, Text, View } from "react-native"
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import axios from 'axios'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 
 const Home = ({navigation}) => {
+    const [countNotif, setCountNotif] = useState("0")
+
+    const getListChat = async () => {
+        const getUser = await AsyncStorage.getItem('username')
+        const body = {
+            username : getUser,
+        }
+       try {
+        const getList =  await axios.post('http://103.75.26.78:8880/savehr/ws.countchat.php',body)
+        console.log(getList.data,'js')
+        setCountNotif(getList.data.data)
+       } catch(e){
+        console.log('error', e)
+       }
+    }
+
+    useEffect(()=> {
+        getListChat();
+    },[])
+
+
     return (
         <View style={styles.container}>
             <View style={styles.content}>
@@ -13,15 +36,15 @@ const Home = ({navigation}) => {
                     <Text style={styles.welcome}>
                         Welcome User !
                     </Text>
-                    <View>
+                    <TouchableOpacity onPress={()=>(navigation.navigate('List'))}>
                     <View style={styles.badge}>
-                            <Text style={styles.notif}>0</Text>
+                            <Text style={styles.notif}>{countNotif}</Text>
                         </View>
                     <Icon name='circle-notifications' size={50} color={'#FFF'}/>
-                    </View>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.cardContainer}>
-                    <TouchableOpacity style={styles.cardMenu} onPress={()=>(navigation.navigate('List'))}>
+                    <TouchableOpacity style={styles.cardMenu} onPress={()=>(navigation.navigate('Add'))}>
                         <Icon name={'chat'} size={90} color='#FFF' />
                         <Text style={styles.textMenu}>Chat</Text>
                     </TouchableOpacity>
@@ -39,6 +62,9 @@ const Home = ({navigation}) => {
                     </TouchableOpacity>
                 </View>
             </View>
+            <TouchableOpacity style={styles.refresh} onPress={getListChat}>
+                <Icon name={'cached'} size={30} color='#FFF' />
+            </TouchableOpacity>
         </View>
     )
 }
@@ -97,6 +123,19 @@ const styles = StyleSheet.create({
         color: '#FFF',
         textAlign: 'center',
         fontWeight: 'bold'
+    },
+    refresh:{
+        position: 'absolute',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#8AC6D0',
+        height: 60,
+        width: 60,
+        borderRadius: 100,
+        marginVertical: 10,
+        bottom: 10,
+        right: 10
     }
 })
 

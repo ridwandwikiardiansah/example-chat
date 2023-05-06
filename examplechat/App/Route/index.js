@@ -7,6 +7,7 @@ import Home from '../Home';
 import Login from '../Login';
 import ListChat from '../ListChat';
 import ChatRoom from '../ChatRoom';
+import AddChat from '../AddChat';
 
 const Stack = createStackNavigator();
  
@@ -34,6 +35,13 @@ const App = () => {
             component={ChatRoom}
             options={{
                 headerTitle: 'Chat Room',
+            }}
+          />
+            <Stack.Screen
+            name="Add"
+            component={AddChat}
+            options={{
+                headerTitle: 'Send Chat',
             }}
           />
            <Stack.Screen

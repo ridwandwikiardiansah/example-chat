@@ -5,30 +5,39 @@ import logo from './16.png';
 import Input from './Component/Input';
 import Button from './Component/Button';
 import axios from 'axios';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ({navigation}) => {
     const [username,setUsername] = useState('');
     const [password,setPassword] = useState('');
 
-    const onPressLogin = () => {
-        // const body = {
-        //     email : username,
-        //     password : password,
-        // }
-        // try {
-        //     const login = await axios.post('http://l.cloudkejaksaan.my.id:4000/api/login',body)
-        //     console.log(login,'login')
-        //     if (login.status === 200){
-        //         Alert.alert('Login Berhasil')
-        //         navigation.navigate('Home');
-        //     }
-        // }catch(e){
-        //     console.log(e,'error')
-        //     Alert.alert('Login Tidak Berhasil')
-        // }
-       navigation.navigate('Home')
-        
+    const onPressLogin = async () => {
+        const body = {
+            page: 'login',
+            token: 'CHAT!@#$%',
+            username : username,
+            password : password,
+        }
+       const  options =  {
+            headers: {
+            'Content-Type': "application/json",
+            'Accept': "application/json",
+            }  
+        } 
+        try {
+            const login = await axios.post('http://103.75.26.78:8880/savehr/ws.login.php',body, options)
+            console.log(login,'login')
+            if (login.data.status === "success"){
+                await AsyncStorage.setItem('username', login.data.data)
+                Alert.alert('Login Berhasil')
+                navigation.navigate('Home');
+            }else{
+                Alert.alert('Login Tidak Berhasil')
+            }
+        }catch(e){
+            console.log(e,'error')
+            Alert.alert('Login Tidak Berhasil')
+        }
     }
 
     return(
