@@ -48,9 +48,9 @@ const Home = ({navigation}) => {
                         <Icon name={'chat'} size={90} color='#FFF' />
                         <Text style={styles.textMenu}>Chat</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.cardMenu}>
+                    <TouchableOpacity style={styles.cardMenu} onPress={()=>(navigation.navigate('ListAbsen'))}>
                         <Icon name={'person-pin'} size={90} color='#FFF' />
-                        <Text style={styles.textMenu}>Profile</Text>
+                        <Text style={styles.textMenu}>Absen</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.cardMenu}>
                         <Icon name={'live-help'} size={90} color='#FFF' />
